@@ -16,6 +16,12 @@ public extension Rule where Value: Sequence {
         return self
     }
 
+    /// Validates that the Sequence is not empty
+    func isNotEmpty() -> Self {
+        add(validator: { !$0.isEmpty })
+        return self
+    }
+
     /// Validates that the Sequence is at least `x` in length
     func minimumLength(_ x: Int) -> Self {
         add(validator: { $0.count >= x })

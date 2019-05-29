@@ -14,20 +14,20 @@ public class BaseRule<X> {
     internal init() { }
 }
 
-public class Rule<X, Value>: BaseRule<X> {
+public class Rule<X, Value, ErrorType>: BaseRule<X> where ErrorType: Error {
 
     public typealias Validator = (Value) -> Bool
 
     private let path:  KeyPath<X, Value>
     private var validators: [Validator] = []
-    private var validationFailureReason: Error!
+    private var validationFailureReason: ErrorType!
 
     internal init(path: KeyPath<X, Value>) {
         self.path = path
         super.init()
     }
 
-    public func error(_ error: Error) {
+    public func error(_ error: ErrorType) {
         validationFailureReason = error
     }
 

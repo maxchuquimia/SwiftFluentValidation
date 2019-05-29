@@ -8,26 +8,21 @@
 
 import Foundation
 
-struct Test {
-    let count: Int
-    let opt: Int?
-}
-
 public class FluentValidator<TargetType, ErrorType> where ErrorType: Error {
 
     internal var rules: [BaseRule<TargetType>] = []
 
-    public func rule<Value>(_ path: KeyPath<TargetType, Value>) -> Rule<TargetType, Value> {
-        let rule = Rule<TargetType, Value>(path: path)
+    public func rule<Value>(_ path: KeyPath<TargetType, Value>) -> Rule<TargetType, Value, ErrorType> {
+        let rule = Rule<TargetType, Value, ErrorType>(path: path)
         rules.append(rule)
         return rule
     }
 
-    public func rule<Value>(_ path: KeyPath<TargetType, Optional<Value>>) -> OptionalRule<TargetType, Value> {
-        let rule = OptionalRule<TargetType, Value>(path: path)
-        rules.append(rule)
-        return rule
-    }
+//    public func rule<Value>(_ path: KeyPath<TargetType, Optional<Value>>) -> OptionalRule<TargetType, Value, ErrorType> {
+//        let rule = OptionalRule<TargetType, Value, ErrorType>(path: path)
+//        rules.append(rule)
+//        return rule
+//    }
 
     public func validate(_ value: TargetType) -> Result<Void, ErrorType> {
 
@@ -40,17 +35,5 @@ public class FluentValidator<TargetType, ErrorType> where ErrorType: Error {
         }
 
         return .success(())
-    }
-}
-
-class ExampleValidator: FluentValidator<Test, ExampleValidator.ValidationError> {
-
-    enum ValidationError: LocalizedError {
-        case tooBig
-    }
-
-    override init() {
-        super.init()
-        rule(\.opt).isNone().error(ValidationError.tooBig)//.greaterThan(10).error(ValidationError.tooBig)
     }
 }
