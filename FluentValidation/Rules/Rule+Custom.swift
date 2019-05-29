@@ -8,10 +8,11 @@
 
 import Foundation
 
-public extension Rule where Value == String {
+public extension Rule {
 
     /// Verifies that the value passes the test `f`
-    func matches(_ f: @escaping Validator) {
+    func must(_ f: @escaping Validator) -> Self {
         add(validator: f)
+        return self
     }
 }
