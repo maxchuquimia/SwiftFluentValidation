@@ -7,6 +7,7 @@ Inspired by [JeremySkinner/FluentValidation](https://github.com/JeremySkinner/Fl
 ```swift
 import FluentValidation
 
+// Create a validator for CustomerModel
 class CustomerValidator: FluentValidator<CustomerModel, CustomerValidator.CustomerError> {
 
     enum CustomerError: Error {
@@ -27,6 +28,7 @@ class CustomerValidator: FluentValidator<CustomerModel, CustomerValidator.Custom
     }
 }
 
+// Usage 
 let customer = CustomerModel()
 let validator = CustomerValidator()
 
@@ -34,7 +36,7 @@ let result = validator.validate(customer)
 
 switch result {
     case .success: ...
-    case .failure(let error): ...
+    case .failure(let customerError): ...
 }
 
 ```
