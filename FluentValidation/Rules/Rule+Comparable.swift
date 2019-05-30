@@ -33,10 +33,4 @@ public extension Rule where Value: Comparable {
         add(validator: { $0 <= x })
         return self
     }
-
-    /// Validates that the value is not equal to `x`
-    func notEqualTo(_ x: Value) -> Self {
-        add(validator: { $0 != x })
-        return self
-    }
 }

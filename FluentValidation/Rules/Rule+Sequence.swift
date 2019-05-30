@@ -23,6 +23,12 @@ public extension Rule where Value: Sequence {
     }
 
     /// Validates that the Sequence is at least `x` in length
+    func length(_ x: Int) -> Self {
+        add(validator: { $0.count == x })
+        return self
+    }
+
+    /// Validates that the Sequence is at least `x` in length
     func minimumLength(_ x: Int) -> Self {
         add(validator: { $0.count >= x })
         return self

@@ -1,15 +1,15 @@
 //
-//  SequenceTests.swift
+//  StringTests.swift
 //  FluentValidationTests
 //
-//  Created by Max Chuquimia on 29/5/19.
+//  Created by Max Chuquimia on 30/5/19.
 //  Copyright © 2019 Chuquimian Productions. All rights reserved.
 //
 
 import XCTest
 @testable import FluentValidation
 
-class SequenceTests: XCTestCase {
+class StringTests: XCTestCase {
 
     func testIsEmpty() {
 
@@ -17,7 +17,7 @@ class SequenceTests: XCTestCase {
 
             override init() {
                 super.init()
-                rule(\.emptyArray).isEmpty().error(.a)
+                rule(\.emptyString).isEmpty().error(.a)
             }
         }
 
@@ -30,7 +30,7 @@ class SequenceTests: XCTestCase {
 
             override init() {
                 super.init()
-                rule(\.threeItemArray).isEmpty().error(.a)
+                rule(\.threeCharString).isEmpty().error(.a)
             }
         }
 
@@ -43,7 +43,7 @@ class SequenceTests: XCTestCase {
 
             override init() {
                 super.init()
-                rule(\.threeItemArray).isNotEmpty().error(.a)
+                rule(\.threeCharString).isNotEmpty().error(.a)
             }
         }
 
@@ -56,7 +56,7 @@ class SequenceTests: XCTestCase {
 
             override init() {
                 super.init()
-                rule(\.emptyArray).isNotEmpty().error(.a)
+                rule(\.emptyString).isNotEmpty().error(.a)
             }
         }
 
@@ -69,8 +69,8 @@ class SequenceTests: XCTestCase {
 
             override init() {
                 super.init()
-                rule(\.threeItemArray).minimumLength(3).error(.a)
-                rule(\.threeItemArray).minimumLength(1).error(.b)
+                rule(\.threeCharString).minimumLength(3).error(.a)
+                rule(\.threeCharString).minimumLength(1).error(.b)
             }
         }
 
@@ -83,7 +83,7 @@ class SequenceTests: XCTestCase {
 
             override init() {
                 super.init()
-                rule(\.threeItemArray).minimumLength(4).error(.a)
+                rule(\.threeCharString).minimumLength(4).error(.a)
             }
         }
 
@@ -96,8 +96,8 @@ class SequenceTests: XCTestCase {
 
             override init() {
                 super.init()
-                rule(\.threeItemArray).maximumLength(3).error(.a)
-                rule(\.threeItemArray).maximumLength(5).error(.b)
+                rule(\.threeCharString).maximumLength(3).error(.a)
+                rule(\.threeCharString).maximumLength(5).error(.b)
             }
         }
 
@@ -110,39 +110,12 @@ class SequenceTests: XCTestCase {
 
             override init() {
                 super.init()
-                rule(\.threeItemArray).maximumLength(2).error(.a)
+                rule(\.threeCharString).maximumLength(2).error(.a)
             }
         }
 
         XCTAssertFail(Validator(), .a)
     }
-
-    func testLength() {
-
-        class Validator: FluentValidator<TestModel, TestError> {
-
-            override init() {
-                super.init()
-                rule(\.threeItemArray).length(3).error(.a)
-            }
-        }
-
-        XCTAssertSuccess(Validator())
-    }
-
-    func testLengthFails() {
-
-        class Validator: FluentValidator<TestModel, TestError> {
-
-            override init() {
-                super.init()
-                rule(\.emptyArray).length(3).error(.a)
-            }
-        }
-
-        XCTAssertFail(Validator())
-    }
-
 
     func testLengthBetween() {
 
@@ -150,8 +123,8 @@ class SequenceTests: XCTestCase {
 
             override init() {
                 super.init()
-                rule(\.threeItemArray).length(isBetween: 1, and: 4).error(.a)
-                rule(\.threeItemArray).length(isBetween: 2, and: 3).error(.b)
+                rule(\.threeCharString).length(isBetween: 1, and: 4).error(TestError.a)
+                rule(\.threeCharString).length(isBetween: 2, and: 3).error(TestError.b)
             }
         }
 
@@ -164,7 +137,7 @@ class SequenceTests: XCTestCase {
 
             override init() {
                 super.init()
-                rule(\.threeItemArray).length(isBetween: 5, and: 10).error(.a)
+                rule(\.threeCharString).length(isBetween: 5, and: 10).error(TestError.a)
             }
         }
 

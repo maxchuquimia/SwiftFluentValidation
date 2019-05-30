@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension Rule where Value == String {
+public extension Rule where Value: Equatable {
 
     /// Validates that the value is equal to `x`
     func equalTo(_ x: Value) -> Self {
@@ -16,24 +16,9 @@ public extension Rule where Value == String {
         return self
     }
 
-    /// Validates that the String is at least `x` characters in length
-    func minimumLength(_ x: Int) -> Self {
-        add(validator: { $0.count >= x })
-        return self
-    }
-
-    /// Validates that the String's length is `x` at the most
-    func maximumLength(_ x: Int) -> Self {
-        add(validator: { $0.count <= x })
-        return self
-    }
-
-    /// Validates that the length of the String is between `x` and `y`, inclusively
-    func length(isBetween x: Int, and y: Int) -> Self {
-        add(validator: {
-            let count = $0.count
-            return count >= x && count <= y
-        })
+    /// Validates that the value is not equal to `x`
+    func notEqualTo(_ x: Value) -> Self {
+        add(validator: { $0 != x })
         return self
     }
 }
