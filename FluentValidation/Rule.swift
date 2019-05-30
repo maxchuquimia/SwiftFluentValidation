@@ -17,14 +17,19 @@ public class BaseRule<X> {
 public class Rule<X, Value, ErrorType>: BaseRule<X> where ErrorType: Error {
 
     public typealias Validator = (Value) -> Bool
+    public typealias PropertyGetter = (X) throws -> (Value)
 
-    private let path:  KeyPath<X, Value>
     private var validators: [Validator] = []
     private var validationFailureReason: ErrorType!
+    private let propertyGetter: PropertyGetter
 
-    internal init(path: KeyPath<X, Value>) {
-        self.path = path
+    internal init(valueGetter: @escaping PropertyGetter) {
+        self.propertyGetter = valueGetter
         super.init()
+    }
+
+    internal convenience init(path: KeyPath<X, Value>) {
+        self.init(valueGetter: { $0[keyPath: path] })
     }
 
     public func error(_ error: ErrorType) {
@@ -33,16 +38,21 @@ public class Rule<X, Value, ErrorType>: BaseRule<X> where ErrorType: Error {
 
     internal override func isValid(val: X) throws {
 
-        let property = val[keyPath: path]
+        let property = try propertyGetter(val)
 
         for isValid in validators {
             if !isValid(property) {
-                throw validationFailureReason
+                throw getValidationError()
             }
         }
     }
 
     internal func add(validator: @escaping Validator) {
         validators.append(validator)
+    }
+
+    // Subclasses can override the error
+    internal func getValidationError() -> ErrorType {
+        return validationFailureReason
     }
 }

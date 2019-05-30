@@ -18,11 +18,11 @@ public class FluentValidator<TargetType, ErrorType> where ErrorType: Error {
         return rule
     }
 
-//    public func rule<Value>(_ path: KeyPath<TargetType, Optional<Value>>) -> OptionalRule<TargetType, Value, ErrorType> {
-//        let rule = OptionalRule<TargetType, Value, ErrorType>(path: path)
-//        rules.append(rule)
-//        return rule
-//    }
+    public func rule<Value>(_ path: KeyPath<TargetType, Optional<Value>>) -> OptionalRule<TargetType, Value, ErrorType> {
+        let rule = OptionalRule<TargetType, Value, ErrorType>(path: path)
+        rules.append(rule)
+        return rule
+    }
 
     public func validate(_ value: TargetType) -> Result<Void, ErrorType> {
 

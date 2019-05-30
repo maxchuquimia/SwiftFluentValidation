@@ -25,6 +25,9 @@ struct TestModel {
 
     let doubleNine: Double = 9
     let doubleTwentyFive: Double = 25
+
+    let noneOptionalString: String? = nil
+    let someOptionalString: String? = "some"
 }
 
 let testModel = TestModel()
