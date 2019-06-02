@@ -2,6 +2,8 @@
 
 Inspired by [JeremySkinner/FluentValidation](https://github.com/JeremySkinner/FluentValidation)
 
+Read more about it [here](https://itnext.io/a-framework-i-wrote-and-why-you-shouldnt-use-it-276f25a39529)
+
 ## Example
 
 ```swift
